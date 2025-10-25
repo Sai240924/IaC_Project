@@ -13,7 +13,7 @@ provider "vercel" {
 
 resource "vercel_project" "my_project" {
   name      = "iac-vercel-project"
-  framework = "create-react-app"  # Supports static HTML
+  framework = null  # Static HTML site
 }
 
 locals {
@@ -27,7 +27,7 @@ locals {
 resource "vercel_deployment" "my_deployment" {
   project_id = vercel_project.my_project.id
   files = {
-    "index.html" = "${local.index_html_size}~${local.index_html_sha}:${local.index_html_content}"
+    "index.html" = "${local.index_html_size}~${local.index_html_sha}:${base64encode(local.index_html_content)}"
   }
   production = true  # Ensures production deployment
 }
