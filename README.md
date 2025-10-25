@@ -58,24 +58,7 @@ IaC Vercel Workflow
 ## Architecture Diagram
 The architecture diagram below visualizes the IaC workflow for deploying the static website, following standard diagramming conventions (rectangles, straight arrows, clear labels):
 
-```mermaid
-graph TD
-    A[Developer's Computer: Edit Files] -->|Commit Files| B[Local Git: Track Changes]
-    B -->|Create feature-add-css| C[Feature Branch: CSS Updates]
-    C -->|Push & Pull Request| D[GitHub: Review & Merge]
-    D -->|Pull to Main| B
-    B -->|Run terraform apply| E[Terraform: Manage Project]
-    E -->|Set up iac-vercel-project| G[Vercel Platform: Host Site]
-    B -->|Run vercel --prod| F[Vercel CLI: Deploy Files]
-    F -->|Serve https://iac-vercel-project.vercel.app| G
-
-    classDef component fill:#e6f3ff,stroke:#0070f3,stroke-width:2px,color:#000;
-    classDef git fill:#e6ffe6,stroke:#28a745,stroke-width:2px,color:#000;
-    classDef vercel fill:#ffe6e6,stroke:#ff3333,stroke-width:2px,color:#000;
-
-    class A,E component;
-    class B,C,D git;
-    class F,G vercel;
+<img alt="Architecture Diagram" src="architecture.svg">
 
 ## Setup Instructions
 To replicate this project, you need **Git**, **Terraform**, **Node.js**, and **Vercel CLI** installed, plus a free Vercel account.
@@ -144,7 +127,7 @@ To replicate this project, you need **Git**, **Terraform**, **Node.js**, and **V
 - `terraform/main.tf`: Terraform code for Vercel project settings.
 - `terraform/variables.tf`: Defines Vercel API token variable.
 - `.gitignore`: Excludes `terraform.tfstate`, `.terraform.lock.hcl`, `.vercel`, `terraform.tfvars`.
-- `README.markdown`: This documentation.
+- `README.md`: This documentation.
 
 ## Troubleshooting
 - **Issue**: Terraform `vercel_deployment` failed with "Could not parse files" error.
