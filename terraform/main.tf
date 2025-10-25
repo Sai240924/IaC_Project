@@ -2,7 +2,7 @@ terraform {
   required_providers {
     vercel = {
       source  = "vercel/vercel"
-      version = "~> 3.0"  # Latest stable for static deploys
+      version = "~> 3.0"  # Latest stable
     }
   }
 }
@@ -16,11 +16,18 @@ resource "vercel_project" "my_project" {
   framework = "create-react-app"  # Supports static HTML
 }
 
+locals {
+  # Compute file metadata for index.html
+  index_html_path    = "${path.module}/../site/index.html"
+  index_html_content = file(local.index_html_path)
+  index_html_sha     = sha1(local.index_html_content)
+  index_html_size    = length(local.index_html_content)
+}
+
 resource "vercel_deployment" "my_deployment" {
   project_id = vercel_project.my_project.id
   files = {
-    for file in fileset("${path.module}/../site", "*.html") :
-    file => file("${path.module}/../site/${file}")
+    "index.html" = "${local.index_html_size}~${local.index_html_sha}:${local.index_html_content}"
   }
   production = true  # Ensures production deployment
 }
