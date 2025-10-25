@@ -15,7 +15,7 @@ I implemented the following best practices for IaC with Git:
 3. **Branching Strategy**: Used a `feature-add-css` branch for CSS updates, merged via pull requests.
 4. **Clear Commit Messages**: Descriptive commits, e.g., "Added vercel.json to configure static site."
 5. **No Secrets**: Vercel API token stored in environment variables, not in Git.
-6. **Documentation**: This README and an ASCII workflow diagram explain the project.
+6. **Documentation**: This README and an architecture diagram explain the project.
 7. **State Management**: Excluded `terraform.tfstate`, `.terraform.lock.hcl`, and other sensitive files in `.gitignore`.
 
 ## Project Workflow
@@ -53,12 +53,6 @@ IaC Vercel Workflow
    v
 [Done!]
 ```
-```
-
-## Architecture Diagram
-The architecture diagram below visualizes the IaC workflow for deploying the static website, following standard diagramming conventions (rectangles, straight arrows, clear labels):
-
-<img alt="Architecture Diagram" src="architecture.svg">
 
 ## Setup Instructions
 To replicate this project, you need **Git**, **Terraform**, **Node.js**, and **Vercel CLI** installed, plus a free Vercel account.
@@ -128,6 +122,36 @@ To replicate this project, you need **Git**, **Terraform**, **Node.js**, and **V
 - `terraform/variables.tf`: Defines Vercel API token variable.
 - `.gitignore`: Excludes `terraform.tfstate`, `.terraform.lock.hcl`, `.vercel`, `terraform.tfvars`.
 - `README.md`: This documentation.
+- `architecture.png`: Architecture diagram image.
+
+## Architecture Diagram
+The architecture diagram below visualizes the IaC workflow for deploying the static website, following standard diagramming conventions (rectangles, straight arrows, clear labels):
+
+<image-card alt="Architecture Diagram" src="architecture.png" ></image-card>
+
+For GitHub rendering, here’s the Mermaid code:
+
+```mermaid
+graph TD
+    A[Developer's Computer: Edit Files] -->|Commit Files| B[Local Git: Track Changes]
+    B -->|Create feature-add-css| C[Feature Branch: CSS Updates]
+    C -->|Push & Pull Request| D[GitHub: Review & Merge]
+    D -->|Pull to Main| B
+    B -->|Run terraform apply| E[Terraform: Manage Project]
+    E -->|Set up iac-vercel-project| G[Vercel Platform: Host Site]
+    B -->|Run vercel --prod| F[Vercel CLI: Deploy Files]
+    F -->|Serve https://iac-vercel-project.vercel.app| G
+
+    classDef component fill:#e6f3ff,stroke:#0070f3,stroke-width:2px,color:#000;
+    classDef git fill:#e6ffe6,stroke:#28a745,stroke-width:2px,color:#000;
+    classDef vercel fill:#ffe6e6,stroke:#ff3333,stroke-width:2px,color:#000;
+
+    class A,E component;
+    class B,C,D git;
+    class F,G vercel;
+```
+
+This flowchart shows the workflow: edit files (`site/`, `terraform/`), manage version control with Git/GitHub, use Terraform for Vercel project settings (`iac-vercel-project`), deploy with Vercel CLI (`vercel --prod`), and host the site on Vercel (`https://iac-vercel-project.vercel.app`).
 
 ## Troubleshooting
 - **Issue**: Terraform `vercel_deployment` failed with "Could not parse files" error.
