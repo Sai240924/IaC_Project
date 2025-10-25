@@ -108,16 +108,6 @@ To replicate this project, you need **Git**, **Terraform**, **Node.js**, and **V
    vercel --prod
    ```
 
-## Files
-- `site/index.html`: Static website HTML.
-- `site/style.css`: CSS styles (linked in `index.html`).
-- `site/vercel.json`: Configures Vercel for static site deployment (disables build step).
-- `terraform/main.tf`: Terraform code for Vercel project settings.
-- `terraform/variables.tf`: Defines Vercel API token variable.
-- `.gitignore`: Excludes `terraform.tfstate`, `.terraform.lock.hcl`, `.vercel`, `terraform.tfvars`.
-- `README.md`: This documentation.
-- `architecture.svg`: Architecture diagram image.
-
 ## Troubleshooting
 - **Issue**: Terraform `vercel_deployment` failed with "Could not parse files" error.
   - **Fix**: Switched to Vercel CLI (`vercel --prod`) due to provider file parsing issues. Simplified Terraform to manage only project settings with `framework = null`.
