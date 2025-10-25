@@ -13,7 +13,12 @@ provider "vercel" {
 
 resource "vercel_project" "my_project" {
   name      = "iac-vercel-project"
-  framework = null  # No framework for static site
+  framework = null
+  git_repository = {
+    type = "github"
+    repo = "Sai240924/IaC_Project"
+  }
+  root_directory = "site"
 }
 
 output "production_url" {
