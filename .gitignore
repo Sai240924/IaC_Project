@@ -43,4 +43,4 @@ tfstate.backup
 .terraform.lock.hcl
 
 # Ignore architecture diagram images
-architecture.svg
+architecture.png
