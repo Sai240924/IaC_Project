@@ -13,7 +13,7 @@ provider "vercel" {
 
 resource "vercel_project" "my_project" {
   name      = "iac-vercel-project"
-  framework = "create-react-app"
+  framework = null  # No framework for static site
 }
 
 output "production_url" {
