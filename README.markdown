@@ -58,10 +58,6 @@ IaC Vercel Workflow
 ## Architecture Diagram
 The architecture diagram below visualizes the IaC workflow for deploying the static website, following standard diagramming conventions (rectangles, straight arrows, clear labels):
 
-![Architecture Diagram](architecture.svg)
-
-For GitHub rendering, here’s the Mermaid code:
-
 ```mermaid
 graph TD
     A[Developer's Computer: Edit Files] -->|Commit Files| B[Local Git: Track Changes]
