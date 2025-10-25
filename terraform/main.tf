@@ -2,7 +2,7 @@ terraform {
   required_providers {
     vercel = {
       source  = "vercel/vercel"
-      version = "~> 3.0"  # Latest stable for better static deploy support
+      version = "~> 3.0"  # Latest stable for static deploys
     }
   }
 }
@@ -13,14 +13,19 @@ provider "vercel" {
 
 resource "vercel_project" "my_project" {
   name      = "iac-vercel-project"
-  framework = "create-react-app"  # Supports static HTML without build errors
+  framework = "create-react-app"  # Supports static HTML
 }
 
 resource "vercel_deployment" "my_deployment" {
   project_id = vercel_project.my_project.id
   files = {
-    "index.html" = file("${path.module}/../site/index.html")
+    for file in fileset("${path.module}/../site", "*.html"):
+    file => {
+      data = file("${path.module}/../site/${file}")
+      sha  = sha1(file("${path.module}/../site/${file}"))
+    }
   }
+  production = true  # Ensures this is a production deployment
 }
 
 output "deployment_url" {
