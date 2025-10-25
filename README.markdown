@@ -1,4 +1,3 @@
-```markdown
 # IaC Vercel Project
 
 ## Overview
@@ -54,11 +53,12 @@ IaC Vercel Workflow
    v
 [Done!]
 ```
+```
 
 ## Architecture Diagram
 The architecture diagram below visualizes the IaC workflow for deploying the static website, following standard diagramming conventions (rectangles, straight arrows, clear labels):
 
-<image-card alt="Architecture Diagram" src="architecture.svg" ></image-card>
+![Architecture Diagram](architecture.svg)
 
 For GitHub rendering, here’s the Mermaid code:
 
@@ -148,7 +148,7 @@ To replicate this project, you need **Git**, **Terraform**, **Node.js**, and **V
 - `terraform/main.tf`: Terraform code for Vercel project settings.
 - `terraform/variables.tf`: Defines Vercel API token variable.
 - `.gitignore`: Excludes `terraform.tfstate`, `.terraform.lock.hcl`, `.vercel`, `terraform.tfvars`.
-- `README.md`: This documentation.
+- `README.markdown`: This documentation.
 
 ## Troubleshooting
 - **Issue**: Terraform `vercel_deployment` failed with "Could not parse files" error.
