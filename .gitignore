@@ -41,3 +41,6 @@ tfstate.backup
 .vercel
 .env
 .terraform.lock.hcl
+
+# Ignore architecture diagram images
+architecture.svg
