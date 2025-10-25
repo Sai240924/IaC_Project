@@ -24,23 +24,32 @@ The architecture diagram below visualizes the IaC workflow for deploying the sta
 For GitHub rendering, here’s the Mermaid code:
 
 ```mermaid
-graph TD
-    A[Developer's Computer: Edit Files] -->|Commit Files| B[Local Git: Track Changes]
-    B -->|Create feature-add-css| C[Feature Branch: CSS Updates]
-    C -->|Push & Pull Request| D[GitHub: Review & Merge]
-    D -->|Pull to Main| B
-    B -->|Run terraform apply| E[Terraform: Manage Project]
-    E -->|Set up iac-vercel-project| G[Vercel Platform: Host Site]
-    B -->|Push to main| F[Vercel CLI: Auto-Deploy]
-    F -->|Serve https://iac-vercel-project.vercel.app| G
+---
+config:
+  layout: elk
+  theme: neutral
+---
+flowchart TD
+    A@{ label: "Developer's Computer: Edit Files" } -- Commit Files --> B["Local Git: Track Changes"]
+    B -- "Create feature-add-css" --> C["Feature Branch: CSS Updates"]
+    C -- Push & Pull Request --> D["GitHub: Review & Merge"]
+    D -- Pull to Main --> B
+    B -- Run terraform apply --> E["Terraform: Manage Project"]
+    E -- "Set up iac-vercel-project" --> G["Vercel Platform: Host Site"]
+    B -- Push to main --> F["Vercel CLI: Auto-Deploy"]
+    F -- "Serve https://iac-vercel-project.vercel.app" --> G
+    A@{ shape: rect}
+     A:::component
+     B:::git
+     C:::git
+     D:::git
+     E:::component
+     G:::vercel
+     F:::vercel
+    classDef component fill:#e6f3ff,stroke:#0070f3,stroke-width:2px,color:#000
+    classDef git fill:#e6ffe6,stroke:#28a745,stroke-width:2px,color:#000
+    classDef vercel fill:#ffe6e6,stroke:#ff3333,stroke-width:2px,color:#000
 
-    classDef component fill:#e6f3ff,stroke:#0070f3,stroke-width:2px,color:#000;
-    classDef git fill:#e6ffe6,stroke:#28a745,stroke-width:2px,color:#000;
-    classDef vercel fill:#ffe6e6,stroke:#ff3333,stroke-width:2px,color:#000;
-
-    class A,E component;
-    class B,C,D git;
-    class F,G vercel;
 ```
 
 This flowchart shows the workflow: edit files (`site/`, `terraform/`), manage version control with Git/GitHub, use Terraform for Vercel project settings (`iac-vercel-project`), and trigger automatic deployments to Vercel (`https://iac-vercel-project.vercel.app`) by pushing to `main`.
