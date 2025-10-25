@@ -19,13 +19,10 @@ resource "vercel_project" "my_project" {
 resource "vercel_deployment" "my_deployment" {
   project_id = vercel_project.my_project.id
   files = {
-    for file in fileset("${path.module}/../site", "*.html"):
-    file => {
-      data = file("${path.module}/../site/${file}")
-      sha  = sha1(file("${path.module}/../site/${file}"))
-    }
+    for file in fileset("${path.module}/../site", "*.html") :
+    file => file("${path.module}/../site/${file}")
   }
-  production = true  # Ensures this is a production deployment
+  production = true  # Ensures production deployment
 }
 
 output "deployment_url" {
