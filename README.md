@@ -18,6 +18,42 @@ I implemented the following best practices for IaC with Git:
 6. **Documentation**: This README and an architecture diagram explain the project.
 7. **State Management**: Excluded `terraform.tfstate`, `.terraform.lock.hcl`, and other sensitive files in `.gitignore`.
 
+## Project Workflow
+Below is an ASCII diagram of the project workflow, showing how I write, version, and deploy the site:
+
+```
+IaC Vercel Workflow
+==================
+[Developer's Computer]
+   |
+   | 1. Write HTML/CSS & Terraform
+   v
+[Local Git Repository]
+   | - Organized Folders, No Secrets
+   | 2. Commit
+   v
+[Feature Branch]
+   | - Branching, Clear Commits
+   | 3. Push
+   v
+[GitHub Repository]
+   | - Documentation
+   | 4. Pull Request & Review
+   v
+[Main Branch]
+   | 5. Pull
+   v
+[Developer's Computer]
+   | 6. Terraform Apply (Project Settings)
+   | 7. Push to Main (Triggers Auto-Deploy)
+   v
+[Vercel Website]
+   | - View URL
+   | 8. Verify
+   v
+[Done!]
+```
+
 ## Architecture Diagram
 The architecture diagram below visualizes the IaC workflow for deploying the static website, following standard diagramming conventions (rectangles, straight arrows, clear labels):
 
