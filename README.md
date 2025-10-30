@@ -22,7 +22,7 @@ I implemented the following best practices for IaC with Git:
 Below is an ASCII diagram of the project workflow, showing how I write, version, and deploy the site:
 
 ```mermaid
----
+
 graph TD
     A[Developer: Edit site/index.html] --> B[git add .]
     B --> C["git commit -m 'Update CSS'"]
@@ -45,7 +45,7 @@ The architecture diagram below visualizes the IaC workflow for deploying the sta
 For GitHub rendering, here’s the Mermaid code:
 
 ```mermaid
----
+
 flowchart LR
  subgraph Local["Local"]
         A["Local Repo: IaC_Project"]
