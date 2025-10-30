@@ -21,37 +21,22 @@ I implemented the following best practices for IaC with Git:
 ## Project Workflow
 Below is an ASCII diagram of the project workflow, showing how I write, version, and deploy the site:
 
-```
-IaC Vercel Workflow
-==================
-[Developer's Computer]
-   |
-   | 1. Write HTML/CSS & Terraform
-   v
-[Local Git Repository]
-   | - Organized Folders, No Secrets
-   | 2. Commit
-   v
-[Feature Branch]
-   | - Branching, Clear Commits
-   | 3. Push
-   v
-[GitHub Repository]
-   | - Documentation
-   | 4. Pull Request & Review
-   v
-[Main Branch]
-   | 5. Pull
-   v
-[Developer's Computer]
-   | 6. Terraform Apply (Project Settings)
-   | 7. Push to Main (Triggers Auto-Deploy)
-   v
-[Vercel Website]
-   | - View URL
-   | 8. Verify
-   v
-[Done!]
+```mermaid
+---
+graph TD
+    A[Developer: Edit site/index.html] --> B[git add .]
+    B --> C["git commit -m 'Update CSS'"]
+    C --> D{Branch?}
+    D -->|feature-add-css| E[git push origin feature-add-css]
+    D -->|main| F[git push origin main]
+    E --> G[GitHub: Pull Request]
+    G --> H[Review & Merge to main]
+    H --> F
+    F --> I[Vercel: Auto-Deploy Triggered]
+    I --> J[Terraform: Manage Project Settings]
+    J --> K[Vercel Platform: Deploy Site]
+    K --> L[Live: https://iac-vercel-project.vercel.app]
+
 ```
 
 ## Architecture Diagram
@@ -61,30 +46,29 @@ For GitHub rendering, here’s the Mermaid code:
 
 ```mermaid
 ---
-config:
-  layout: elk
-  theme: neutral
----
-flowchart TD
-    A@{ label: "Developer's Computer: Edit Files" } -- Commit Files --> B["Local Git: Track Changes"]
-    B -- "Create feature-add-css" --> C["Feature Branch: CSS Updates"]
-    C -- Push & Pull Request --> D["GitHub: Review & Merge"]
-    D -- Pull to Main --> B
-    B -- Run terraform apply --> E["Terraform: Manage Project"]
-    E -- "Set up iac-vercel-project" --> G["Vercel Platform: Host Site"]
-    B -- Push to main --> F["Vercel CLI: Auto-Deploy"]
-    F -- "Serve https://iac-vercel-project.vercel.app" --> G
-    A@{ shape: rect}
-     A:::component
-     B:::git
-     C:::git
-     D:::git
-     E:::component
-     G:::vercel
-     F:::vercel
-    classDef component fill:#e6f3ff,stroke:#0070f3,stroke-width:2px,color:#000
-    classDef git fill:#e6ffe6,stroke:#28a745,stroke-width:2px,color:#000
-    classDef vercel fill:#ffe6e6,stroke:#ff3333,stroke-width:2px,color:#000
+flowchart LR
+ subgraph Local["Local"]
+        A["Local Repo: IaC_Project"]
+        B["site/ → HTML/CSS"]
+        C["terraform/ → main.tf"]
+  end
+ subgraph GitHub["GitHub"]
+        D["GitHub Repo"]
+        E["Pull Requests"]
+        F["main Branch"]
+  end
+ subgraph Vercel["Vercel"]
+        G["Vercel Dashboard"]
+        H["Auto-Deploy on Push"]
+        I["Vercel Project: iac-vercel-project"]
+        J["Live Site"]
+  end
+    A --> B & C
+    A -- git push --> D
+    D -- Webhook --> H
+    C -- terraform apply --> I
+    H --> I
+    I --> J
 
 ```
 

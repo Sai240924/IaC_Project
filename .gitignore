@@ -42,5 +42,6 @@ tfstate.backup
 .env
 .terraform.lock.hcl
 
-# Ignore architecture diagram images
-architecture.png
+# Ignore images
+IaC Arch.png
+IaC WF.png
